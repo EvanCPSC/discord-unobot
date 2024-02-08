@@ -1,4 +1,4 @@
-# discord-unobot
+# Discord Uno! Bot
 
 
 ## Development
