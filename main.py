@@ -6,6 +6,8 @@ load_dotenv()
 import discord
 from discord.ext import commands
 from discord import app_commands
+import uno_game
+import player
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
@@ -68,5 +70,9 @@ async def unogame(interaction: discord.Interaction):
         in_progress = False
     else:
         await interaction.response.send_message("There is no game started!", ephemeral=True)
+
+@client.tree.command(name="gen_card")
+async def unogame(interaction: discord.Interaction):
+    await interaction.response.send_message(uno_game.genCard(), ephemeral=False)
 
 client.run(os.getenv("DISCORD_BOT_TOKEN"))
