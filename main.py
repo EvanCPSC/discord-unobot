@@ -8,6 +8,7 @@ from discord.ext import commands
 from discord import app_commands
 import uno_game
 import player
+from player import Player
 
 TOKEN = os.getenv("DISCORD_BOT_TOKEN")
 
@@ -29,7 +30,13 @@ async def on_ready():
         print(F'Could Not Sync Tree: {e}')
 
 members = []
+players = []
 in_progress = False
+
+def getPlayerByID(id: int):
+    for i in range(len(players)):
+        if players[i].id == id:
+            return players[i]
 
 @client.tree.command(name="join")
 async def unogame(interaction: discord.Interaction):
@@ -60,6 +67,8 @@ async def unogame(interaction: discord.Interaction):
         else: 
             await interaction.response.send_message("Starting game with " + len(members) + "members...", ephemeral=False)
             in_progress = True
+            for i in range(len(members)):
+                players.append(Player(members[i]))
     else:
         await interaction.response.send_message("Game has already started!", ephemeral=True)
 
@@ -71,8 +80,12 @@ async def unogame(interaction: discord.Interaction):
     else:
         await interaction.response.send_message("There is no game started!", ephemeral=True)
 
-@client.tree.command(name="gen_card")
+@client.tree.command(name="show_cards")
 async def unogame(interaction: discord.Interaction):
-    await interaction.response.send_message(uno_game.genCard(), ephemeral=False)
+    if in_progress:
+        playa = getPlayerByID(interaction.user.id)
+        await interaction.response.send_message("Your Cards: " + playa.cards, ephemeral=True)
+    else:
+        await interaction.response.send_message("There is no game started!", ephemeral=True)
 
 client.run(os.getenv("DISCORD_BOT_TOKEN"))
