@@ -1,3 +1,20 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import random
+
+COLORS = ["Red", "Green", "Blue", "Yellow", "Wild"]
+NORMAL = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Skip", "Reverse", "+2", ]
+WILDS = ["Card", "+4"]
+
+class Deck:
+    def __init__(self):
+        self.current = self.genCard()
+
+
+    def genCard():
+        col = COLORS[random(len(COLORS))]
+        if col == "Wild":
+            return tuple((col, WILDS[random(len(WILDS))]))
+        else:
+            return tuple((col, NORMAL[random(len(NORMAL))]))
