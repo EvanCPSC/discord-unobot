@@ -6,6 +6,8 @@ class Player:
     def __init__(self, member):
         self.id = member # member is interaction.user.id
         self.cards = []
+        self.genCards()
+        self.count = len(self.cards)
 
     def genCards(self):
         for i in range(7):
