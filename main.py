@@ -143,8 +143,6 @@ async def unogame(interaction: discord.Interaction,
     else:
         await interaction.response.send_message("There is no game started!", ephemeral=True)
 
-client.run(os.getenv("DISCORD_BOT_TOKEN"))
-
 @client.tree.command(name="draw")
 async def unogame(interaction: discord.Interaction):
     if not inProgress():
@@ -154,3 +152,5 @@ async def unogame(interaction: discord.Interaction):
         await interaction.response.send_message("You drew a " + str(card) + "!", ephemeral=True)
     else:
         await interaction.response.send_message("There is no game started!", ephemeral=True)
+
+client.run(os.getenv("DISCORD_BOT_TOKEN"))
