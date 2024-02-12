@@ -119,20 +119,36 @@ async def unogame(interaction: discord.Interaction):
 @client.tree.command(name="place", description="Place a card down")
 @discord.app_commands.describe(
     color='Red, Green, Blue, Yellow, or Wild',
-    value='Normal: 0-9, Skip, Reverse, +2 or Wild: Card, +4'
+    value='Normal: 0-9, Skip, Reverse, +2 or Wild: Card, +4',
+    new_color='Red, Green, Blue, or Yellow if placing a Wild'
 )
 async def unogame(interaction: discord.Interaction,
                   color: str,
-                  value: str
+                  value: str,
+                  new_color:str = ""
                   ):
     if inProgress():
         playa = getPlayerByID(interaction.user.id)
+        color = color.lower()
+        value = value.lower()
+        new_color = new_color.lower()
         for i in range(len(playa.cards)):
-            if color.lower() == playa.cards[i][0] and value.lower() == playa.cards[i][1]:
-                if color.lower() == currCard[0] or color.lower() == "wild" or value.lower() == currCard[1]:
+            if color == playa.cards[i][0] and value == playa.cards[i][1]:
+                if color == currCard[0] or color == "wild" or value == currCard[1]:
+                    if color == "wild":
+                        if uno_game.getColor(new_color) != None:
+                            color = new_color
+                        else:
+                            await interaction.response.send_message("Not a valid color!", ephemeral=True)
+                            break
                     changeCard(color, value)
-                    await interaction.response.send_message(embed=discord.Embed(color=uno_game.getColor(currCard[0]), title='Current Card:', description=currCard), ephemeral=False)
+                    
                     playa.cards.pop(i)
+                    if len(playa.cards) == 0:
+                        await interaction.response.send_message(str(interaction.user.display_name) + " puts down " + str(currCard) + " and wins!", ephemeral=False)
+                        endGame()
+                    else:
+                        await interaction.response.send_message(embed=discord.Embed(color=uno_game.getColor(currCard[0]), title='Current Card:', description=currCard), ephemeral=False)
                     break
                 else:
                     await interaction.response.send_message("That card doesn't match!", ephemeral=True)
@@ -140,12 +156,13 @@ async def unogame(interaction: discord.Interaction,
                 await interaction.response.send_message("You don't have that card!", ephemeral=True)
                 break
         
+        
     else:
         await interaction.response.send_message("There is no game started!", ephemeral=True)
 
 @client.tree.command(name="draw")
 async def unogame(interaction: discord.Interaction):
-    if not inProgress():
+    if inProgress():
         playa = getPlayerByID(interaction.user.id)
         card = uno_game.genCard()
         playa.cards.append(card)

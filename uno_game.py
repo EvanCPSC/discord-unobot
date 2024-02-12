@@ -23,8 +23,6 @@ def genCard():
         return tuple((col, NORMAL[math.floor(random.random() * len(NORMAL))]))
     
 
-def game(players):
-    pass
 
 def getColor(color:str):
     if color == "red":
@@ -36,7 +34,7 @@ def getColor(color:str):
     elif color == "yellow":
         return discord.Color.yellow()
     else:
-        return discord.Color.darker_grey()
+        return None
 
 
 
