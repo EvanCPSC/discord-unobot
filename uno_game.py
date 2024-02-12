@@ -39,3 +39,16 @@ def getColor(color:str):
 
 
 
+RULES = discord.Embed(
+    color=discord.Color.blurple(),
+    title="Rules of UnoBot:",
+    description="Setup:\n2-10 players, each player gets 7 cards.\nThe first person to join will be the first to go.\n\n"
+    + "Gameplay:\n On your turn, either:\n- Place a card that matches the current card's color or value\n- Place a wild card\n"
+    + "- Draw a card (1 per turn)\n- First player to zero cards wins!\n\n"
+    + "Special Cards:\n- Reverse: Inverts the turn order.\n- Skip: Skip the next player's turn (no stacking).\n"
+    + "- +2 (Draw Two): Next player must draw 2 cards and skip their turn (no stacking).\n\n"
+    + "Wild Cards:\n- Wild Card: use the \'new_color\' variable to change the color.\n"
+    + "- +4 (Draw Four): Next player must draw 4 cards and skip their turn (no stacking). "
+    + "Also can change color using the \'new_color\' variable.\n\n"
+    )
+

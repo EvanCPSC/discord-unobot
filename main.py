@@ -142,7 +142,6 @@ async def unogame(interaction: discord.Interaction,
                             await interaction.response.send_message("Not a valid color!", ephemeral=True)
                             break
                     changeCard(color, value)
-                    
                     playa.cards.pop(i)
                     if len(playa.cards) == 0:
                         await interaction.response.send_message(str(interaction.user.display_name) + " puts down " + str(currCard) + " and wins!", ephemeral=False)
@@ -169,5 +168,10 @@ async def unogame(interaction: discord.Interaction):
         await interaction.response.send_message("You drew a " + str(card) + "!", ephemeral=True)
     else:
         await interaction.response.send_message("There is no game started!", ephemeral=True)
+
+@client.tree.command(name="rules")
+async def unogame(interaction: discord.Interaction):
+    await interaction.user.send(embed=uno_game.RULES)
+    await interaction.response.send_message("Rules sent!", ephemeral=True)
 
 client.run(os.getenv("DISCORD_BOT_TOKEN"))
