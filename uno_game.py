@@ -6,9 +6,9 @@ import math
 import player
 from player import Player
 
-COLORS = ["Red", "Green", "Blue", "Yellow", "Wild"]
-NORMAL = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Skip", "Reverse", "+2", ]
-WILDS = ["Card", "+4"]
+COLORS = ["red", "green", "blue", "yellow", "wild"]
+NORMAL = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "skip", "reverse", "+2", ]
+WILDS = ["card", "+4"]
 
 class Deck:
     def __init__(self):
@@ -17,7 +17,7 @@ class Deck:
 
 def genCard():
     col = COLORS[math.floor(random.random() * len(COLORS))]
-    if col == "Wild":
+    if col == "wild":
         return tuple((col, WILDS[math.floor(random.random() * len(WILDS))]))
     else:
         return tuple((col, NORMAL[math.floor(random.random() * len(NORMAL))]))
@@ -25,6 +25,18 @@ def genCard():
 
 def game(players):
     pass
+
+def getColor(color:str):
+    if color == "red":
+        return discord.Color.red()
+    elif color == "blue":
+        return discord.Color.blue()
+    elif color == "green":
+        return discord.Color.green()
+    elif color == "yellow":
+        return discord.Color.yellow()
+    else:
+        return discord.Color.darker_grey()
 
 
 
