@@ -4,7 +4,7 @@ from discord import app_commands
 import uno_game
 class Player:
     def __init__(self, member):
-        self.id = member # member is interaction.user.id
+        self.mem = member # member is interaction.user
         self.cards = []
         self.genCards()
         self.count = len(self.cards)

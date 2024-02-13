@@ -37,11 +37,15 @@ def getColor(color:str):
         return None
 
 
-
+COMMANDS = discord.Embed(
+    color=discord.Color.blurple(),
+    title="Commands:",
+    description=""
+)
 
 RULES = discord.Embed(
     color=discord.Color.blurple(),
-    title="Rules of UnoBot:",
+    title="Rules of Uno!Bot:",
     description="Setup:\n2-10 players, each player gets 7 cards.\nThe first person to join will be the first to go.\n\n"
     + "Gameplay:\n On your turn, either:\n- Place a card that matches the current card's color or value\n- Place a wild card\n"
     + "- Draw a card (1 per turn)\n- First player to zero cards wins!\n\n"
@@ -50,5 +54,5 @@ RULES = discord.Embed(
     + "Wild Cards:\n- Wild Card: use the \'new_color\' variable to change the color.\n"
     + "- +4 (Draw Four): Next player must draw 4 cards and skip their turn (no stacking). "
     + "Also can change color using the \'new_color\' variable.\n\n"
-    )
+)
 
