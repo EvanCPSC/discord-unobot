@@ -74,7 +74,7 @@ async def unogame(interaction: discord.Interaction):
             startGame()
             for i in range(len(members)):
                 players.append(Player(members[i]))
-            await interaction.response.send_message(content="Starting game with " + str(lMem) + " members...\n" + players[0].mem.display_name + "'s turn!", embed=discord.Embed(color=uno_game.getColor(currCard[0]), title='Current Card:', description=currCard), ephemeral=False)
+            await interaction.response.send_message(content="Starting game with " + str(lMem) + " members...\n<@" + str(players[0].mem.id) + ">'s turn!", embed=discord.Embed(color=uno_game.getColor(currCard[0]), title='Current Card:', description=currCard), ephemeral=False)
             
     else:
         await interaction.response.send_message("Game has already started!", ephemeral=True)
@@ -128,10 +128,10 @@ async def unogame(interaction: discord.Interaction,
                         analyzeValue(value)
                         playa.cards.pop(i)
                         if not playa.cards:
-                            await interaction.response.send_message(str(interaction.user.display_name) + " puts down " + str(currCard) + " and wins!", ephemeral=False)
+                            await interaction.response.send_message("<@" + str(players[turn-rev].mem.id) + "> puts down " + str(currCard) + " and wins!", ephemeral=False)
                             endGame()
                         else:
-                            await interaction.response.send_message(content=players[turn].mem.display_name + "'s turn!", embed=discord.Embed(color=uno_game.getColor(currCard[0]), title='Current Card:', description=currCard), ephemeral=False)
+                            await interaction.response.send_message(content="<@" + str(players[turn].mem.id) + ">'s turn!", embed=discord.Embed(color=uno_game.getColor(currCard[0]), title='Current Card:', description=currCard), ephemeral=False)
                         break
                     else:
                         await interaction.response.send_message("That card doesn't match!", ephemeral=True)
@@ -151,6 +151,8 @@ async def unogame(interaction: discord.Interaction):
             card = uno_game.genCard()
             playa.cards.append(card)
             analyzeValue("")
+            channel = interaction.channel
+            await channel.send("<@" + str(players[turn-rev].mem.id) + "> drew!\n<@" + str(players[turn].mem.id) + ">'s turn!")
             await interaction.response.send_message("You drew a " + str(card) + "!", ephemeral=True)
         else:
             await interaction.response.send_message("There is no game started!", ephemeral=True)
@@ -216,5 +218,6 @@ def startGame():
     global turn
     turn = 0
     changeState()
+
 
 client.run(os.getenv("DISCORD_BOT_TOKEN"))
